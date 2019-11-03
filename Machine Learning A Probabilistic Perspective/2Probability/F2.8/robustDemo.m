@@ -14,12 +14,15 @@ bar(locs,[0,sCounts])
 
 % Now fit 
 subplot(223)
-[x,y] = GaussFit(data);
 hold on;
-bar(locs,[0,sCounts])
+[x,y] = GaussFit(data);
 plot(x,y)
 [x,y] = LaplaceFit(data);
 plot(x,y);
+[x,y]=StudentFit(data);
+plot(x,y);
+bar(locs,[0,sCounts])
+legend('Gaussian','Laplacian','Student')
 hold off;
 
 % data from normal + outlier
@@ -35,24 +38,19 @@ hold off;
 
 % Now fit
 subplot(224)
-[x,y] = GaussFit([data;outliers]);
 hold on;
-[counts,locs] = histcounts(data,nbins);
-sCounts = counts./(ndatapts+noutliers);
-bar(locs,[0,sCounts])
-[counts,locs] = histcounts(outliers,noutliers);
-sCounts = counts./(ndatapts+noutliers);
-bar(locs,[0,sCounts])
+[x,y] = GaussFit([data;outliers]);
 plot(x,y)
 [x,y] = LaplaceFit([data;outliers]);
 plot(x,y)
+[x,y]=StudentFit([data;outliers]);
+plot(x,y);
+[counts,locs] = histcounts(data,nbins);
+sCounts = counts./(ndatapts+noutliers);
+bar(locs,[0,sCounts])
+legend('Gaussian','Laplacian','Student')
 hold off;
 
-
-
-
-
-subplot(224)
 
 
 
@@ -76,7 +74,3 @@ mu = median(data); b = sum(abs(data-mu))/length(data);
 x = dmin:(dmax-dmin)/10000:dmax;
 y = exp(-abs(x-mu)/b)./(2*b);
 end
-
-
-
-% StudentFit
