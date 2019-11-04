@@ -40,6 +40,7 @@ mahal = sum((X/Sigma).*X,2);
 logc = gammaln(nu/2 + d/2) - gammaln(nu/2)-.5*log(Sigma) ...
     - (d/2)*log(nu) - (d/2)*log(pi);
 logp = logc  -(nu+d)/2*log1p(mahal/nu);
+% disp(logp)
 end
 
 function model  = studentCreate(mu, Sigma, dof)
@@ -71,6 +72,7 @@ ess.Sw  = sum(w);
 ess.SX  = sum(Xw, 1)'; % sum_i u(i) xi, column vector
 ess.SXX = Xw'*X;       % sum_i u(i) xi xi'
 ess.denom = N;
+disp(model)
 end
 
 function model = mstep(model, ess, dofEstimator)
@@ -97,6 +99,7 @@ done = false;
 loglikHist = zeros(maxIter + 1, 1);
 while ~done
     [ess, ll] = estep(model, data);
+    disp(ll)
     loglikHist(iter) = ll;
     model = mstep(model, ess);
     if iter > maxIter
