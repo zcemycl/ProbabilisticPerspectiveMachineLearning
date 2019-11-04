@@ -90,32 +90,19 @@ function [model, loglikHist, llHists] = emAlgo(model, data, init, estep, mstep)
 %% Perform EM
 maxIter = 50;
 convTol = 1e-4;
-plotfn = [];
-computeLoglik = true;
-restartNum=1;
 model = init(model);
 
 iter = 1;
 done = false;
 loglikHist = zeros(maxIter + 1, 1);
 while ~done
-  if computeLoglik
     [ess, ll] = estep(model, data);
-  else
-    [ess] = estep(model, data);
-    ll = 0;
-  end
-    if ~isempty(plotfn)
-        plotfn(model, data, ess, ll, iter);
-    end
     loglikHist(iter) = ll;
     model = mstep(model, ess);
     if iter > maxIter
       done = true;
     elseif iter > 1
-      if computeLoglik
-        done = convergenceTest(loglikHist(iter), loglikHist(iter-1), convTol);
-      end
+      done = convergenceTest(loglikHist(iter), loglikHist(iter-1), convTol);
     end
     iter = iter + 1;
 end
