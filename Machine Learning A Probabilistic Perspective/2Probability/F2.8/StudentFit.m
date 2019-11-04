@@ -7,7 +7,7 @@ dofEstimator = @(model)estimateDofNLL(model, data);
 initFn  = @(model)init(model); 
 estepFn = @(model, X)estep(model, X);
 mstepFn = @(model, ess)mstep(model, ess, dofEstimator);
-[model, loglikHist] = emAlgo(model, data, initFn, estepFn, mstepFn,{});
+[model, loglikHist] = emAlgo(model, data, initFn, estepFn, mstepFn);
 
 dmin = min(data); dmax = max(data);
 x = dmin:(dmax-dmin)/10000:dmax;
@@ -31,19 +31,21 @@ end
 
 % Log probability of student distribution
 function logp = studentLogprob(arg1,arg2)
-mu    = arg1.mu; Sigma = arg1.Sigma; nu    = arg1.dof;
-X     = arg2;
+mu = arg1.mu; Sigma = arg1.Sigma; nu = arg1.dof;
+X = arg2;
 d = size(Sigma, 1);
 X = X(:) - mu(:);
 
 mahal = sum((X/Sigma).*X,2);
-logc = gammaln(nu/2 + d/2) - gammaln(nu/2) - 0.5*logdet(Sigma) ...
+logc = gammaln(nu/2 + d/2) - gammaln(nu/2)-.5*log(Sigma) ...
     - (d/2)*log(nu) - (d/2)*log(pi);
 logp = logc  -(nu+d)/2*log1p(mahal/nu);
 end
 
 function model  = studentCreate(mu, Sigma, dof)
-model = structure(mu, Sigma, dof);
+model.mu = mu;
+model.Sigma = Sigma;
+model.dof = dof;
 model.ndims = length(mu); 
 model.modelType = 'student';
 end
@@ -61,7 +63,7 @@ mu       = model.mu;
 Sigma    = model.Sigma;
 dof      = model.dof;
 [N, D]   = size(X);
-XC = bsxfun(@minus,X,rowvec(mu));
+XC = X-mu;
 delta =  sum((XC/Sigma).*XC,2);
 w = (dof+D) ./ (dof+delta);      % E[tau(i)]
 Xw = X .* repmat(w(:), 1, D);
@@ -84,7 +86,7 @@ if ~isempty(dofEstimator)
 end
 end
 
-function [model, loglikHist, llHists] = emAlgo(model, data, init, estep, mstep, varargin)
+function [model, loglikHist, llHists] = emAlgo(model, data, init, estep, mstep)
 %% Perform EM
 maxIter = 50;
 convTol = 1e-4;
@@ -121,7 +123,7 @@ loglikHist = loglikHist(1:iter-1);
 llHists{1} = loglikHist;
 end
 
-function [converged] = convergenceTest(fval, previous_fval, threshold)
+function converged = convergenceTest(fval, previous_fval, threshold)
 converged = 0;
 delta_fval = abs(fval - previous_fval);
 avg_fval = (abs(fval) + abs(previous_fval) + eps)/2;
