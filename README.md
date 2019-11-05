@@ -7,7 +7,10 @@ This repository contains code to replicate, modify the codes and prove the mathe
 All the work is in the following format, 
 - MATLAB implementation
 - Python implementation with proofs and explanations
+
+This repository is intended for people who want to learn more about Probabilistic Machine Learning alongside with simplified examples, and will cover different concepts, such as student distribution em algorithm, PCA, ICA, bayes net, etc.
+
  ## References
  Murphy, Kevin P. 2012, Machine Learning: A Probabilistic Perspective, The MIT Press 0262018020, 9780262018029. 
 
-This repository is intended for people who want to learn more about Probabilistic Machine Learning alongside with simplified examples, and will cover different concepts, such as student distribution em algorithm, PCA, ICA, bayes net, etc.
+
