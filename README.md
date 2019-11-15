@@ -13,9 +13,11 @@ This repository is intended for people who want to learn more about Probabilisti
 Other relevant works include, [Local Interpretable Model-Agnostic Explanations](https://github.com/zcemycl/ProbabilisticPerspectiveMachineLearning/blob/master/LIME/LIME.ipynb), Bata-VAE, Neural Statistician, Gaussian Dropout, Variational Dropout, Bayes by Backprop, InfoGAN, etc.
 
  ## References
-[1] Murphy, Kevin P. 2012, Machine Learning: A Probabilistic Perspective, The MIT Press 0262018020, 9780262018029. 
-[2] Ribeiro, Marco Tulio et al. “"Why Should I Trust You?": Explaining the Predictions of Any Classifier.” HLT-NAACL Demos (2016).
-[3] Burgess, Christopher P. et al. “Understanding disentangling in $\beta$-VAE.” (2018).
+ [1] Murphy, Kevin P. 2012, Machine Learning: A Probabilistic Perspective, The MIT Press 0262018020, 9780262018029. 
+ 
+ [2] Ribeiro, Marco Tulio et al. “"Why Should I Trust You?": Explaining the Predictions of Any Classifier.” HLT-NAACL Demos (2016).
+ 
+ [3] Burgess, Christopher P. et al. “Understanding disentangling in $\beta$-VAE.” (2018).
  
  ## Results
 LIME         |  ICA
