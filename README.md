@@ -13,8 +13,11 @@ This repository is intended for people who want to learn more about Probabilisti
 Other relevant works include, [Local Interpretable Model-Agnostic Explanations](https://github.com/zcemycl/ProbabilisticPerspectiveMachineLearning/blob/master/LIME/LIME.ipynb), Bata-VAE, Neural Statistician, Gaussian Dropout, Variational Dropout, Bayes by Backprop, InfoGAN, etc.
 
  ## References
- Murphy, Kevin P. 2012, Machine Learning: A Probabilistic Perspective, The MIT Press 0262018020, 9780262018029. 
- Ribeiro, Marco Tulio et al. “"Why Should I Trust You?": Explaining the Predictions of Any Classifier.” HLT-NAACL Demos (2016).
+ [1] Murphy, Kevin P. 2012, Machine Learning: A Probabilistic Perspective, The MIT Press 0262018020, 9780262018029. 
+ 
+ [2] Ribeiro, Marco Tulio et al. “"Why Should I Trust You?": Explaining the Predictions of Any Classifier.” HLT-NAACL Demos (2016).
+ 
+ [3] Burgess, Christopher P. et al. “Understanding disentangling in $\beta$-VAE.” (2018).
  
  ## Results
 LIME         |  ICA
@@ -22,4 +25,6 @@ LIME         |  ICA
 <img src="https://github.com/zcemycl/ProbabilisticPerspectiveMachineLearning/blob/master/LIME/result.png" width="320" > |  <img src="https://github.com/zcemycl/ProbabilisticPerspectiveMachineLearning/blob/master/Machine%20Learning%20A%20Probabilistic%20Perspective/12LatentLinearModels/F12.20/icaresult.png" width="320" >
 PCA|MC Pi estimation
 <img src="https://github.com/zcemycl/ProbabilisticPerspectiveMachineLearning/blob/master/Machine%20Learning%20A%20Probabilistic%20Perspective/12LatentLinearModels/F12.5/pcaresult.png" width="320" >|<img src="https://github.com/zcemycl/ProbabilisticPerspectiveMachineLearning/blob/master/Machine%20Learning%20A%20Probabilistic%20Perspective/2Probability/F2.19/result.png" width="320" >
+Gaussian Blob dataset|BVAE
+<img src="https://github.com/zcemycl/ProbabilisticPerspectiveMachineLearning/blob/master/Variational%20Autoencoder%20and%20Its%20extension/BVAE/GaussBlob.gif" width="320" >|
 
