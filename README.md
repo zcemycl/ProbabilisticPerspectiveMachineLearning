@@ -14,5 +14,11 @@ Other relevant works include, [Local Interpretable Model-Agnostic Explanations](
 
  ## References
  Murphy, Kevin P. 2012, Machine Learning: A Probabilistic Perspective, The MIT Press 0262018020, 9780262018029. 
+ Ribeiro, Marco Tulio et al. “"Why Should I Trust You?": Explaining the Predictions of Any Classifier.” HLT-NAACL Demos (2016).
+ 
+ ## Results
+ LIME
+ 
+ <img src="https://github.com/zcemycl/ProbabilisticPerspectiveMachineLearning/blob/master/LIME/result.png" width="400" >
 
 
