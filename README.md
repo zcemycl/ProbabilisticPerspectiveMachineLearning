@@ -16,6 +16,7 @@ Other relevant works include, [Local Interpretable Model-Agnostic Explanations](
  Murphy, Kevin P. 2012, Machine Learning: A Probabilistic Perspective, The MIT Press 0262018020, 9780262018029. 
  
  ## Results
- ![LIME result](https://github.com/zcemycl/ProbabilisticPerspectiveMachineLearning/blob/master/LIME/result.png)
+ LIME
+ ![LIME result](https://github.com/zcemycl/ProbabilisticPerspectiveMachineLearning/blob/master/LIME/result.png =100x20)
 
 
