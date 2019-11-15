@@ -17,13 +17,12 @@ Other relevant works include, [Local Interpretable Model-Agnostic Explanations](
  Ribeiro, Marco Tulio et al. “"Why Should I Trust You?": Explaining the Predictions of Any Classifier.” HLT-NAACL Demos (2016).
  
  ## Results
- LIME
+LIME         |  ICA
+:-------------------------:|:-------------------------:
+<img src="https://github.com/zcemycl/ProbabilisticPerspectiveMachineLearning/blob/master/LIME/result.png" width="320" > |  <img src="https://github.com/zcemycl/ProbabilisticPerspectiveMachineLearning/blob/master/Machine%20Learning%20A%20Probabilistic%20Perspective/12LatentLinearModels/F12.20/icaresult.png" width="320" >
  
-<img src="https://github.com/zcemycl/ProbabilisticPerspectiveMachineLearning/blob/master/LIME/result.png" width="320" >
- 
- ICA
- 
-<img src="https://github.com/zcemycl/ProbabilisticPerspectiveMachineLearning/blob/master/Machine%20Learning%20A%20Probabilistic%20Perspective/12LatentLinearModels/F12.20/icaresult.png" width="320" >
+
+
   
  PCA
  
