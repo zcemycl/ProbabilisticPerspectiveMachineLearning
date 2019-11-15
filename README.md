@@ -20,12 +20,6 @@ Other relevant works include, [Local Interpretable Model-Agnostic Explanations](
 LIME         |  ICA
 :-------------------------:|:-------------------------:
 <img src="https://github.com/zcemycl/ProbabilisticPerspectiveMachineLearning/blob/master/LIME/result.png" width="320" > |  <img src="https://github.com/zcemycl/ProbabilisticPerspectiveMachineLearning/blob/master/Machine%20Learning%20A%20Probabilistic%20Perspective/12LatentLinearModels/F12.20/icaresult.png" width="320" >
- 
-
-
-  
- PCA
- 
-<img src="https://github.com/zcemycl/ProbabilisticPerspectiveMachineLearning/blob/master/Machine%20Learning%20A%20Probabilistic%20Perspective/12LatentLinearModels/F12.5/pcaresult.png" width="320" >
-
+PCA|MC Pi estimation
+<img src="https://github.com/zcemycl/ProbabilisticPerspectiveMachineLearning/blob/master/Machine%20Learning%20A%20Probabilistic%20Perspective/12LatentLinearModels/F12.5/pcaresult.png" width="320" >|<img src="https://github.com/zcemycl/ProbabilisticPerspectiveMachineLearning/blob/master/Machine%20Learning%20A%20Probabilistic%20Perspective/2Probability/F2.19/result.png" width="320" >
 
