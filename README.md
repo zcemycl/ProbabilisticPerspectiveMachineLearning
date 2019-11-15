@@ -17,6 +17,7 @@ Other relevant works include, [Local Interpretable Model-Agnostic Explanations](
  
  ## Results
  LIME
- ![LIME result](https://github.com/zcemycl/ProbabilisticPerspectiveMachineLearning/blob/master/LIME/result.png =100x20)
+ 
+ <img src="https://github.com/zcemycl/ProbabilisticPerspectiveMachineLearning/blob/master/LIME/result.png" width="400" >
 
 
