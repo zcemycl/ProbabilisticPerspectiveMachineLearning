@@ -17,6 +17,8 @@ Other relevant works include, [Local Interpretable Model-Agnostic Explanations](
  - Ribeiro, Marco Tulio et al. “"Why Should I Trust You?": Explaining the Predictions of Any Classifier.” HLT-NAACL Demos (2016).
  - Burgess, Christopher P. et al. “Understanding disentangling in $\beta$-VAE.” (2018).
  - Kingma, Diederik P. and Max Welling. “Auto-Encoding Variational Bayes.” CoRR abs/1312.6114 (2013): n. pag.
+ - Loic Matthey and Irina Higgins and Demis Hassabis and Alexander Lerchner. "dSprites: Disentanglement testing Sprites dataset". https://github.com/deepmind/dsprites-dataset/. (2017).
+
  
  ## Results
 LIME         |  ICA
