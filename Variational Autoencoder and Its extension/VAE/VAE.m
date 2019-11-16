@@ -124,7 +124,7 @@ end
 function x = gatext(x)
 x = gather(extractdata(x));
 end
-% gpu dl array wrapper
+%% gpu dl array wrapper
 function dlx = gpdl(x,labels)
 dlx = gpuArray(dlarray(x,labels));
 end
@@ -180,7 +180,6 @@ if count == 1
 else 
   imwrite(imind,cm,'VAEmnist.gif','gif','WriteMode','append'); 
 end 
-
 
 end
 

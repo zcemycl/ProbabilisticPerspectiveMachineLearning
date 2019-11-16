@@ -1,0 +1,63 @@
+clear all; close all; clc;
+%% Beta Variational Autoencoder
+%% Load Data
+load('data.mat')
+trainX = 
+%% Settings
+settings.latentDim = 10; settings.imageSize = [64,64,1];
+settings.numEpochs = 100000; settings.miniBatchSize = 64;
+settings. lr = 5e-4; 
+%% Initialization
+%% Encoder Weight
+paramsEn.CNW1 = dlarray(initializeGaussian([4,4,1,32]));
+paramsEn.CNb1 = dlarray(zeros(32,1,'single'));
+paramsEn.CNW2 = dlarray(initializeGaussian([4,4,32,32]));
+paramsEn.CNb2 = dlarray(zeros(32,1,'single'));
+paramsEn.CNW3 = dlarray(initializeGaussian([4,4,32,32]));
+paramsEn.CNb3 = dlarray(zeros(32,1,'single'));
+paramsEn.CNW4 = dlarray(initializeGaussian([4,4,32,32]));
+paramsEn.CNb4 = dlarray(zeros(32,1,'single'));
+paramsEn.FCW1 = dlarray(initializeGaussian(...
+    [2*settings.latentDim,64*7*7]));
+paramsEn.FCb1 = dlarray(zeros(2*settings.latentDim,1,'single'));
+%% Decoder Weight
+
+%% Train
+dly = Encoder(,paramsEn);
+
+%% Helper functions
+%% preprocess
+function x = preprocess(x)
+x = reshape(x,64,64,1,[]);
+end
+%% initialize weights
+function parameter = initializeGaussian(parameterSize)
+parameter = randn(parameterSize, 'single') .* 0.01;
+end
+%% Encoder
+function dly = Encoder(dlx,paramsEn)
+% convolutions
+dly = dlconv(dlx,paramsEn.CNW1,paramsEn.CNb1,...
+    'Stride',2,'Padding','same');
+dly = leakyrelu(dly,0.1);
+dly = dlconv(dly,paramsEn.CNW2,paramsEn.CNb2,...
+    'Stride',2,'Padding','same');
+dly = leakyrelu(dly,0.1);
+dly = dlconv(dly,paramsEn.CNW3,paramsEn.CNb3,...
+    'Stride',2,'Padding','same');
+dly = leakyrelu(dly,0.1);
+dly = dlconv(dly,paramsEn.CNW4,paramsEn.CNb4,...
+    'Stride',2,'Padding','same');
+dly = leakyrelu(dly,0.1);
+% fully connected
+dly = gpdl(reshape(dly,64*7*7,[]),'CB');
+dly = fullyconnect(dly,paramsEn.FCW1,paramsEn.FCb1);
+end
+%% extract data
+function x = gatext(x)
+x = gather(extractdata(x));
+end
+%% gpu dl array wrapper
+function dlx = gpdl(x,labels)
+dlx = gpuArray(dlarray(x,labels));
+end

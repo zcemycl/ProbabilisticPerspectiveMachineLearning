@@ -1,4 +1,5 @@
-R = .4; data = [];
+clear all; close all; clc;
+R = .3; data = [];
 h = figure;
 count = 1;
 filename = 'GaussBlob.gif';
@@ -30,7 +31,7 @@ end
 function gauss = generateImage(xc,yc,R)
 % generate gaussian blobs dataset
 imSize = 64;                           % image size: n X n
-sigma = 1.5;
+sigma = 3;
 trim = .005;                             % trim off gaussian values smaller than this
 
 % make linear ramp
