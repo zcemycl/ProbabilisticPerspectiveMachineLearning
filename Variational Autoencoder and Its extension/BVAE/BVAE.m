@@ -48,10 +48,8 @@ idall = [0:15]*16+[1:16];
 while ~out
     tic; 
     trainXshuffle = trainX(:,:,:,randperm(size(trainX,4)));
-%     if rem(epoch,10)==0
     dlx = gpdl(single(trainX(:,:,:,idall)),'SSCB');
     progressplot(dlx,paramsEn,paramsDe,epoch)
-%     end
     
     for i=1:numIterations
         global_iter = global_iter+1;
