@@ -5,9 +5,9 @@ load('data.mat')
 trainX = preprocess(data);
 %% Settings
 settings.latentDim = 10; settings.imageSize = [64,64,1];
-settings.numEpochs = 100000; settings.miniBatchSize = 64;
-settings. lr = 5e-4; settings.beta = 150;
-
+settings.numEpochs = 1.5e5; settings.miniBatchSize = 64;
+settings. lr = 5e-4; settings.gamma = 1000;
+settings.Cmax = 20; settings.C_stop_iter = 1e5;
 
 %% Initialization
 %% Encoder Weight
@@ -41,16 +41,17 @@ paramsDe.TCb4 = dlarray(zeros(1,1,'single'));
 %% Train
 avgGradientsEncoder = []; avgGradientsSquaredEncoder = [];
 avgGradientsDecoder = []; avgGradientsSquaredDecoder = [];
+trainX = repmat(trainX,[1,1,1,20]);
 numIterations = floor(size(trainX,4)/settings.miniBatchSize);
 out = false; epoch = 0; global_iter = 0;
+idall = [0:15]*16+[1:16];
 while ~out
     tic; 
     trainXshuffle = trainX(:,:,:,randperm(size(trainX,4)));
-    if rem(epoch,10)==0
-        idall = [0:15]*16+[1:16];
-        dlx = gpdl(single(trainX(:,:,:,idall)),'SSCB');
-        progressplot(dlx,paramsEn,paramsDe,epoch)
-    end
+%     if rem(epoch,10)==0
+    dlx = gpdl(single(trainX(:,:,:,idall)),'SSCB');
+    progressplot(dlx,paramsEn,paramsDe,epoch)
+%     end
     
     for i=1:numIterations
         global_iter = global_iter+1;
@@ -58,7 +59,8 @@ while ~out
         XBatch=gpdl(single(trainXshuffle(:,:,:,idx)),'SSCB');
 
         [GradEn,GradDe] = ...
-            dlfeval(@modelGradients,XBatch,paramsEn,paramsDe,settings);
+            dlfeval(@modelGradients,XBatch,paramsEn,paramsDe,...
+                    settings,global_iter);
 
         % Update
         [paramsEn,avgGradientsEncoder,avgGradientsSquaredEncoder] = ...
@@ -86,7 +88,7 @@ function parameter = initializeGaussian(parameterSize)
 parameter = randn(parameterSize, 'single') .* 0.01;
 end
 %% modelGradients
-function [GradEn,GradDe] = modelGradients(dlx,paramsEn,paramsDe,settings)
+function [GradEn,GradDe] = modelGradients(dlx,paramsEn,paramsDe,settings,global_iter)
 dly = Encoder(dlx,paramsEn);
 [zSampled,zMean,zLogvar] = sampling(dly);
 dly = Decoder(zSampled,paramsDe);
@@ -94,19 +96,19 @@ xPred = sigmoid(dly);
 
 % Loss
 % squares = 0.5*(xPred-dlx).^2;
-% reconstructionLoss  = sum(squares, [1,2,3]);
+% reconstructionLoss  = mean(sum(squares, [1,2,3]));
 reconstructionLoss = mean(sum(-(dlx.*log(xPred)+(1-dlx).*log(1-xPred)),[1,2,3]));
-KL = -.5 * sum(1 + zLogvar - zMean.^2 - exp(zLogvar), 1);
+KL = mean(-.5 * sum(1 + zLogvar - zMean.^2 - exp(zLogvar), 1));
 if isnan(gatext(reconstructionLoss))
     xlogxp = gatext(dlx.*log(xPred)); 
     x_log_xp = gatext((1-dlx).*log(1-xPred));
     xlogxp(find(isnan(xlogxp))) = 0;
     x_log_xp(find(isnan(x_log_xp))) = 0;
     reconstructionLoss = mean(sum(-(xlogxp+x_log_xp),[1,2,3]));
-    reconstructionLoss = dlarray(recon_loss,'SSCB');
+    reconstructionLoss = dlarray(reconstructionLoss,'SSCB');
 end
-
-Loss = mean(reconstructionLoss + settings.beta*KL);
+C = max(min(settings.Cmax*global_iter/settings.C_stop_iter,settings.Cmax),0);
+Loss = reconstructionLoss + abs(settings.gamma*(KL-C));
 
 % Gradients
 [GradEn,GradDe] = dlgradient(Loss,paramsEn,paramsDe);
@@ -116,40 +118,40 @@ function dly = Encoder(dlx,paramsEn)
 % convolutions
 dly = dlconv(dlx,paramsEn.CNW1,paramsEn.CNb1,...
     'Stride',2,'Padding','same');
-dly = leakyrelu(dly,0.1);
+dly = relu(dly);
 dly = dlconv(dly,paramsEn.CNW2,paramsEn.CNb2,...
     'Stride',2,'Padding','same');
-dly = leakyrelu(dly,0.1);
+dly = relu(dly);
 dly = dlconv(dly,paramsEn.CNW3,paramsEn.CNb3,...
     'Stride',2,'Padding','same');
-dly = leakyrelu(dly,0.1);
+dly = relu(dly);
 dly = dlconv(dly,paramsEn.CNW4,paramsEn.CNb4,...
     'Stride',2,'Padding','same');
-dly = leakyrelu(dly,0.1);
+dly = relu(dly);
 % fully connected
 dly = gpdl(reshape(dly,32*4*4,[]),'CB');
 dly = fullyconnect(dly,paramsEn.FCW1,paramsEn.FCb1);
-dly = leakyrelu(dly,0.1);
+dly = relu(dly);
 dly = fullyconnect(dly,paramsEn.FCW2,paramsEn.FCb2);
 end
 %% Decoder
 function dly = Decoder(dlx,paramsDe)
 % fully connected
 dly = fullyconnect(dlx,paramsDe.FCW1,paramsDe.FCb1);
-dly = leakyrelu(dly,0.1);
+dly = relu(dly);
 dly = fullyconnect(dly,paramsDe.FCW2,paramsDe.FCb2);
-dly = leakyrelu(dly,0.1);
+dly = relu(dly);
 % transpose convolution
 dly = gpdl(reshape(dly,4,4,32,[]),'SSCB');
 dly = dltranspconv(dly,paramsDe.TCW1,paramsDe.TCb1,...
     'Stride',2,'Cropping','same');
-dly = leakyrelu(dly,0.1);
+dly = relu(dly);
 dly = dltranspconv(dly,paramsDe.TCW2,paramsDe.TCb2,...
     'Stride',2,'Cropping','same');
-dly = leakyrelu(dly,0.1);
+dly = relu(dly);
 dly = dltranspconv(dly,paramsDe.TCW3,paramsDe.TCb3,...
     'Stride',2,'Cropping','same');
-dly = leakyrelu(dly,0.1);
+dly = relu(dly);
 dly = dltranspconv(dly,paramsDe.TCW4,paramsDe.TCb4,...
     'Stride',2,'Cropping','same');
 end

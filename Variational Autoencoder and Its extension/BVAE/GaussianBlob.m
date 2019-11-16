@@ -1,5 +1,5 @@
 clear all; close all; clc;
-R = .3; data = [];
+R = .2; data = [];
 h = figure;
 count = 1;
 filename = 'GaussBlob.gif';
@@ -27,6 +27,7 @@ for yc = 0:2*R/15:2*R
     end
 end
 
+save('data.mat','data')
 
 function gauss = generateImage(xc,yc,R)
 % generate gaussian blobs dataset
