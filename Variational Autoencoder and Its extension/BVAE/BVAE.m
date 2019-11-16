@@ -6,8 +6,8 @@ trainX = preprocess(data);
 %% Settings
 settings.latentDim = 10; settings.imageSize = [64,64,1];
 settings.numEpochs = 1.5e5; settings.miniBatchSize = 64;
-settings. lr = 5e-4; settings.gamma = 1000;
-settings.Cmax = 20; settings.C_stop_iter = 1e5;
+settings. lr = 5e-4; settings.gamma = 1;
+settings.Cmax = 0; settings.C_stop_iter = 1e5;
 
 %% Initialization
 %% Encoder Weight
