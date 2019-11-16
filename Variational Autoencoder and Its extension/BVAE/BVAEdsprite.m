@@ -13,10 +13,6 @@ data0 = hdf5read(hinfo.GroupHierarchy.Datasets(1));
 data0 = permute(data0,[2,1,3]);
 % shuffle
 trainX = reshape(data0,[64,64,1,size(data0,3)]);
-% show one of the examples 
-figure
-imagesc(trainX(:,:,:,700000))
-drawnow;
 %% Settings
 settings.latentDim = 10; settings.imageSize = [64,64,1];
 settings.miniBatchSize = 64;
@@ -208,11 +204,19 @@ if ~isempty(fig.Children)
 end
 
 h = fig;
-I = imtile(cat(4,gatext(dlx),gatext(xPred)),'GridSize',[1,2]);
+subplot(1,2,1)
+I = imtile(gatext(dlx));
 I = rescale(I);
 imagesc(I)
 set(gca,'visible','off')
-pbaspect([2 1 1])
+pbaspect([1 1 1])
+
+subplot(1,2,2)
+I = imtile(gatext(xPred));
+I = rescale(I);
+imagesc(I)
+set(gca,'visible','off')
+pbaspect([1 1 1])
 
 drawnow;
 % 

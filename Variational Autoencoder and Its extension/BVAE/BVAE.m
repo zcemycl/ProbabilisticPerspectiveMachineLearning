@@ -48,8 +48,6 @@ idall = [0:15]*16+[1:16];
 while ~out
     tic; 
     trainXshuffle = trainX(:,:,:,randperm(size(trainX,4)));
-    dlx = gpdl(single(trainX(:,:,:,idall)),'SSCB');
-    progressplot(dlx,paramsEn,paramsDe,epoch)
     
     for i=1:numIterations
         global_iter = global_iter+1;
@@ -63,10 +61,18 @@ while ~out
         % Update
         [paramsEn,avgGradientsEncoder,avgGradientsSquaredEncoder] = ...
             adamupdate(paramsEn, GradEn, ...
-            avgGradientsEncoder, avgGradientsSquaredEncoder, global_iter);
+            avgGradientsEncoder, avgGradientsSquaredEncoder, ...
+            global_iter,settings.lr);
         [paramsDe,avgGradientsDecoder,avgGradientsSquaredDecoder] = ...
             adamupdate(paramsDe, GradDe, ...
-            avgGradientsDecoder, avgGradientsSquaredDecoder, global_iter);
+            avgGradientsDecoder, avgGradientsSquaredDecoder, ...
+            global_iter,settings.lr);
+        
+        if i == 1 || rem(i,10)==0
+            dlx = gpdl(single(trainX(:,:,:,idall)),'SSCB');
+            progressplot(dlx,paramsEn,paramsDe,epoch)
+        end
+
     end
 
     elapsedTime = toc;
