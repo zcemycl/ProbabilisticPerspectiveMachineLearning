@@ -21,13 +21,9 @@ Other relevant works include, [Local Interpretable Model-Agnostic Explanations](
 
  
  ## Results
-LIME         |  ICA
-:-------------------------:|:-------------------------:
-<img src="https://github.com/zcemycl/ProbabilisticPerspectiveMachineLearning/blob/master/LIME/result.png" width="320" > |  <img src="https://github.com/zcemycl/ProbabilisticPerspectiveMachineLearning/blob/master/Machine%20Learning%20A%20Probabilistic%20Perspective/12LatentLinearModels/F12.20/icaresult.png" width="320" >
-PCA|MC Pi estimation
-<img src="https://github.com/zcemycl/ProbabilisticPerspectiveMachineLearning/blob/master/Machine%20Learning%20A%20Probabilistic%20Perspective/12LatentLinearModels/F12.5/pcaresult.png" width="320" >|<img src="https://github.com/zcemycl/ProbabilisticPerspectiveMachineLearning/blob/master/Machine%20Learning%20A%20Probabilistic%20Perspective/2Probability/F2.19/result.png" width="320" >
-Gaussian Blob dataset|VAE
-<img src="https://github.com/zcemycl/ProbabilisticPerspectiveMachineLearning/blob/master/Variational%20Autoencoder%20and%20Its%20extension/BVAE/GaussBlob.gif" width="320" >|<img src="https://github.com/zcemycl/ProbabilisticPerspectiveMachineLearning/blob/master/Variational%20Autoencoder%20and%20Its%20extension/VAE/VAEmnist.gif" width="320" >
-GAN|
-<img src="https://github.com/zcemycl/ProbabilisticPerspectiveMachineLearning/blob/master/Generative%20Adversarial%20Network%20and%20its%20extension/GAN/GANmnist.gif" width="320">|
+LIME         |  ICA  | PCA|MC Pi estimation
+:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
+<img src="https://github.com/zcemycl/ProbabilisticPerspectiveMachineLearning/blob/master/LIME/result.png" width="200" > |  <img src="https://github.com/zcemycl/ProbabilisticPerspectiveMachineLearning/blob/master/Machine%20Learning%20A%20Probabilistic%20Perspective/12LatentLinearModels/F12.20/icaresult.png" width="200" >|<img src="https://github.com/zcemycl/ProbabilisticPerspectiveMachineLearning/blob/master/Machine%20Learning%20A%20Probabilistic%20Perspective/12LatentLinearModels/F12.5/pcaresult.png" width="200" >|<img src="https://github.com/zcemycl/ProbabilisticPerspectiveMachineLearning/blob/master/Machine%20Learning%20A%20Probabilistic%20Perspective/2Probability/F2.19/result.png" width="200" >
+Gaussian Blob dataset|VAE|GAN|
+<img src="https://github.com/zcemycl/ProbabilisticPerspectiveMachineLearning/blob/master/Variational%20Autoencoder%20and%20Its%20extension/BVAE/GaussBlob.gif" width="200" >|<img src="https://github.com/zcemycl/ProbabilisticPerspectiveMachineLearning/blob/master/Variational%20Autoencoder%20and%20Its%20extension/VAE/VAEmnist.gif" width="200" >|<img src="https://github.com/zcemycl/ProbabilisticPerspectiveMachineLearning/blob/master/Generative%20Adversarial%20Network%20and%20its%20extension/GAN/GANmnist.gif" width="200">|
 
