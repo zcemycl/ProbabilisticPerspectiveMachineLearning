@@ -12,7 +12,7 @@ settings.latentDim = 10; settings.imageSize = [28,28,1];
 settings.numEpochs = 50; settings.miniBatchSize = 512;
 settings. lr = 1e-3; 
 %% Initialization 
-% Encoder Weights
+%% Encoder Weights
 paramsEn.CNW1 = dlarray(initializeGaussian([3,3,1,32]));
 paramsEn.CNb1 = dlarray(zeros(32,1,'single'));
 paramsEn.CNW2 = dlarray(initializeGaussian([3,3,32,64]));
@@ -20,7 +20,7 @@ paramsEn.CNb2 = dlarray(zeros(64,1,'single'));
 paramsEn.FCW1 = dlarray(initializeGaussian(...
     [2*settings.latentDim,64*7*7]));
 paramsEn.FCb1 = dlarray(zeros(2*settings.latentDim,1,'single'));
-% Decoder Weights
+%% Decoder Weights
 paramsDe.FCW1 = dlarray(initializeGaussian([64*7*7,...
     settings.latentDim]));
 paramsDe.FCb1 = dlarray(zeros(64*7*7,1,'single'));
