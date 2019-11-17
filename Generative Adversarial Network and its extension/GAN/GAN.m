@@ -85,19 +85,19 @@ while ~out
         
         if i==1 || rem(i,20)==0
             progressplot(paramsGen,stGen,settings);
-            if i==1 || (epoch>=0 && i==1) 
-                h = gcf;
-                % Capture the plot as an image 
-                frame = getframe(h); 
-                im = frame2im(frame); 
-                [imind,cm] = rgb2ind(im,256); 
-                % Write to the GIF File 
-                if epoch == 0
-                  imwrite(imind,cm,'GANmnist.gif','gif', 'Loopcount',inf); 
-                else 
-                  imwrite(imind,cm,'GANmnist.gif','gif','WriteMode','append'); 
-                end 
-            end
+%             if i==1 || (epoch>=0 && i==1) 
+%                 h = gcf;
+%                 % Capture the plot as an image 
+%                 frame = getframe(h); 
+%                 im = frame2im(frame); 
+%                 [imind,cm] = rgb2ind(im,256); 
+%                 % Write to the GIF File 
+%                 if epoch == 0
+%                   imwrite(imind,cm,'GANmnist.gif','gif', 'Loopcount',inf); 
+%                 else 
+%                   imwrite(imind,cm,'GANmnist.gif','gif','WriteMode','append'); 
+%                 end 
+%             end
         end
         
     end
