@@ -19,9 +19,9 @@ paramsGen.FCW1 = dlarray(...
     initializeGaussian([256,settings.latent_dim],.02));
 paramsGen.FCb1 = dlarray(zeros(256,1,'single'));
 paramsGen.EMW1 = dlarray(...
-    initializeGaussian([settings.latent_dim,...
+    initializeUniform([settings.latent_dim,...
     settings.num_labels]));
-
+paramsGen.EMb1 = dlarray(zeros(1,settings.num_labels,'single'));
 paramsGen.BNo1 = dlarray(zeros(256,1,'single'));
 paramsGen.BNs1 = dlarray(ones(256,1,'single'));
 paramsGen.FCW2 = dlarray(initializeGaussian([512,256]));
@@ -43,6 +43,10 @@ stGen.BN1 = []; stGen.BN2 = []; stGen.BN3 = [];
 paramsDis.FCW1 = dlarray(initializeGaussian([1024,...
      prod(settings.image_size)],.02));
 paramsDis.FCb1 = dlarray(zeros(1024,1,'single'));
+paramsDis.EMW1 = dlarray(...
+    initializeUniform([prod(settings.image_size),...
+    settings.num_labels]));
+paramsDis.EMb1 = dlarray(zeros(1,settings.num_labels,'single'));
 paramsDis.BNo1 = dlarray(zeros(1024,1,'single'));
 paramsDis.BNs1 = dlarray(ones(1024,1,'single'));
 paramsDis.FCW2 = dlarray(initializeGaussian([512,1024]));
@@ -63,7 +67,9 @@ numIterations = floor(size(trainX,2)/settings.batch_size);
 out = false; epoch = 0; global_iter = 0;
 while ~out
     tic; 
-    trainXshuffle = trainX(:,randperm(size(trainX,2)));
+    shuffleid = randperm(size(trainX,2));
+    trainXshuffle = trainX(:,shuffleid);
+    trainYshuffle = trainY(shuffleid);
     fprintf('Epoch %d\n',epoch) 
     for i=1:numIterations
         global_iter = global_iter+1;
@@ -71,10 +77,12 @@ while ~out
             settings.batch_size]),'CB');
         idx = (i-1)*settings.batch_size+1:i*settings.batch_size;
         XBatch=gpdl(single(trainXshuffle(:,idx)),'CB');
+        YBatch=gpdl(single(trainYshuffle(idx)),'B');
 
         [GradGen,GradDis,stGen,stDis] = ...
-                dlfeval(@modelGradients,XBatch,noise,...
-                paramsGen,paramsDis,stGen,stDis);
+                dlfeval(@modelGradients,XBatch,YBatch,noise,...
+                paramsGen,paramsDis,stGen,stDis,...
+                settings);
 
         % Update Discriminator network parameters
         [paramsDis,avgG.Dis,avgGS.Dis] = ...
@@ -117,6 +125,7 @@ end
 %% Helper Functions
 %% preprocess
 function x = preprocess(x)
+% x = (x-127.5)/127.5;
 x = x/255;
 x = reshape(x,28*28,[]);
 end
@@ -135,82 +144,60 @@ if nargin < 2
 end
 parameter = randn(parameterSize, 'single') .* sigma;
 end
+function parameter = initializeUniform(parameterSize,sigma)
+if nargin < 2
+    sigma = 0.05;
+end
+parameter = 2*sigma*rand(parameterSize, 'single')-sigma;
+end
 %% Generator
-function [dly,st] = Generator(dlx,params,st)
+function [dly,st] = Generator(dlx,labels,params,st)
+dly = embedding(dlx,labels,params);
 % fully connected
 %1
-dly = fullyconnect(dlx,params.FCW1,params.FCb1);
+dly = fullyconnect(dly,params.FCW1,params.FCb1);
 dly = leakyrelu(dly,0.2);
-% if isempty(st.BN1)
-%     [dly,st.BN1.mu,st.BN1.sig] = batchnorm(dly,params.BNo1,params.BNs1);
-% else
-%     [dly,st.BN1.mu,st.BN1.sig] = batchnorm(dly,params.BNo1,...
-%         params.BNs1,st.BN1.mu,st.BN1.sig);
-% end
 %2
 dly = fullyconnect(dly,params.FCW2,params.FCb2);
 dly = leakyrelu(dly,0.2);
-% if isempty(st.BN2)
-%     [dly,st.BN2.mu,st.BN2.sig] = batchnorm(dly,params.BNo2,params.BNs2);
-% else
-%     [dly,st.BN2.mu,st.BN2.sig] = batchnorm(dly,params.BNo2,...
-%         params.BNs2,st.BN2.mu,st.BN2.sig);
-% end
 %3
 dly = fullyconnect(dly,params.FCW3,params.FCb3);
 dly = leakyrelu(dly,0.2);
-% if isempty(st.BN3)
-%     [dly,st.BN3.mu,st.BN3.sig] = batchnorm(dly,params.BNo3,params.BNs3);
-% else
-%     [dly,st.BN3.mu,st.BN3.sig] = batchnorm(dly,params.BNo3,...
-%         params.BNs3,st.BN3.mu,st.BN3.sig);
-% end
 %4
 dly = fullyconnect(dly,params.FCW4,params.FCb4);
 % tanh
 dly = tanh(dly);
 end
 %% Discriminator
-function [dly,st] = Discriminator(dlx,params,st)
+function [dly,st] = Discriminator(dlx,labels,params,st)
+dly = embedding(dlx,labels,params);
 % fully connected 
 %1
-dly = fullyconnect(dlx,params.FCW1,params.FCb1);
+dly = fullyconnect(dly,params.FCW1,params.FCb1);
 dly = leakyrelu(dly,0.2);
-dly = dropout(dly);
-% if isempty(st.BN1)
-%     [dly,st.BN1.mu,st.BN1.sig] = batchnorm(dly,params.BNo1,params.BNs1);
-% else
-%     [dly,st.BN1.mu,st.BN1.sig] = batchnorm(dly,params.BNo1,...
-%         params.BNs1,st.BN1.mu,st.BN1.sig);
-% end
 %2
 dly = fullyconnect(dly,params.FCW2,params.FCb2);
 dly = leakyrelu(dly,0.2);
-dly = dropout(dly);
-% if isempty(st.BN2)
-%     [dly,st.BN2.mu,st.BN2.sig] = batchnorm(dly,params.BNo2,params.BNs2);
-% else
-%     [dly,st.BN2.mu,st.BN2.sig] = batchnorm(dly,params.BNo2,...
-%         params.BNs2,st.BN2.mu,st.BN2.sig);
-% end
+dly = dropout(dly,.4);
 %3
 dly = fullyconnect(dly,params.FCW3,params.FCb3);
 dly = leakyrelu(dly,0.2);
-dly = dropout(dly);
+dly = dropout(dly,.4);
 %4
 dly = fullyconnect(dly,params.FCW4,params.FCb4);
 % sigmoid
 dly = sigmoid(dly);
 end
 %% modelGradients
-function [GradGen,GradDis,stGen,stDis]=modelGradients(x,z,paramsGen,...
-    paramsDis,stGen,stDis)
-[fake_images,stGen] = Generator(z,paramsGen,stGen);
-d_output_real = Discriminator(x,paramsDis,stDis);
-[d_output_fake,stDis] = Discriminator(fake_images,paramsDis,stDis);
+function [GradGen,GradDis,stGen,stDis]=modelGradients(x,y,z,paramsGen,...
+    paramsDis,stGen,stDis,settings)
+y0 = randi([0,9],[settings.batch_size,1]);
+[fake_images,stGen] = Generator(z,y0,paramsGen,stGen);
+d_output_real = Discriminator(x,y,paramsDis,stDis);
+[d_output_fake,stDis] = Discriminator(fake_images,y,paramsDis,stDis);
 
 % Loss due to true or not
-d_loss = -mean(.9*log(d_output_real+eps)+log(1-d_output_fake+eps));
+d_loss = -mean(log(d_output_real+eps)+log(1-d_output_fake+eps));
 g_loss = -mean(log(d_output_fake+eps));
 
 % For each network, calculate the gradients with respect to the loss.
@@ -219,9 +206,10 @@ GradDis = dlgradient(d_loss,paramsDis);
 end
 %% progressplot
 function progressplot(paramsGen,stGen,settings)
-r = 5; c = 5;
+r = 2; c = 5;
+labels = gpdl(single([0:9]'),'B');
 noise = gpdl(randn([settings.latent_dim,r*c]),'CB');
-gen_imgs = Generator(noise,paramsGen,stGen);
+gen_imgs = Generator(noise,labels,paramsGen,stGen);
 gen_imgs = reshape(gen_imgs,28,28,[]);
 
 fig = gcf;
@@ -242,10 +230,21 @@ function dly = dropout(dlx,p)
 if nargin < 2
     p = .3;
 end
-n = p*10;
-mask = randi([1,10],size(dlx));
+[n,d] = rat(p);
+mask = randi([1,d],size(dlx));
 mask(mask<=n)=0;
 mask(mask>n)=1;
 dly = dlx.*mask;
 
+end
+%% embedding
+function dly = embedding(dlx,labels,params)
+% params EM W (latent_dim,num_labels)
+%               / (img_elements,num_labels)
+%           b (latent_dim,1) (ignore)
+%               / (img_elements,1)
+maskW = params.EMW1(:,labels+1);
+maskb = params.EMb1(:,labels+1);
+dly = dlx.*maskW;
+% dly = dlx.*maskW+maskb;
 end
