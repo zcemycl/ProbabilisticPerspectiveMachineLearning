@@ -40,22 +40,22 @@ paramsGen.FCb4 = dlarray(zeros(prod(settings.image_size)...
 stGen.BN1 = []; stGen.BN2 = []; stGen.BN3 = [];
 
 %% Discriminator
-paramsDis.FCW1 = dlarray(initializeGaussian([1024,...
+paramsDis.FCW1 = dlarray(initializeGaussian([512,...
      prod(settings.image_size)],.02));
-paramsDis.FCb1 = dlarray(zeros(1024,1,'single'));
+paramsDis.FCb1 = dlarray(zeros(512,1,'single'));
 paramsDis.EMW1 = dlarray(...
     initializeUniform([prod(settings.image_size),...
     settings.num_labels]));
 paramsDis.EMb1 = dlarray(zeros(1,settings.num_labels,'single'));
 paramsDis.BNo1 = dlarray(zeros(1024,1,'single'));
 paramsDis.BNs1 = dlarray(ones(1024,1,'single'));
-paramsDis.FCW2 = dlarray(initializeGaussian([512,1024]));
+paramsDis.FCW2 = dlarray(initializeGaussian([512,512]));
 paramsDis.FCb2 = dlarray(zeros(512,1,'single'));
 paramsDis.BNo2 = dlarray(zeros(512,1,'single'));
 paramsDis.BNs2 = dlarray(ones(512,1,'single'));
-paramsDis.FCW3 = dlarray(initializeGaussian([256,512]));
-paramsDis.FCb3 = dlarray(zeros(256,1,'single'));
-paramsDis.FCW4 = dlarray(initializeGaussian([1,256]));
+paramsDis.FCW3 = dlarray(initializeGaussian([512,512]));
+paramsDis.FCb3 = dlarray(zeros(512,1,'single'));
+paramsDis.FCW4 = dlarray(initializeGaussian([1,512]));
 paramsDis.FCb4 = dlarray(zeros(1,1,'single'));
 
 stDis.BN1 = []; stDis.BN2 = [];
