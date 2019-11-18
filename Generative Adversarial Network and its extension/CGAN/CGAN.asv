@@ -12,50 +12,50 @@ settings.num_labels = 10;
 settings.batch_size = 32; settings.image_size = [28,28,1]; 
 settings.lrD = 0.0002; settings.lrG = 0.001; settings.beta1 = 0.5;
 settings.beta2 = 0.999; settings.maxepochs = 50;
-numnodes = 256;
+
 %% Initialization
 %% Generator
 paramsGen.FCW1 = dlarray(...
-    initializeGaussian([numnodes,settings.latent_dim],.02));
-paramsGen.FCb1 = dlarray(zeros(numnodes,1,'single'));
+    initializeGaussian([256,settings.latent_dim],.02));
+paramsGen.FCb1 = dlarray(zeros(256,1,'single'));
 paramsGen.EMW1 = dlarray(...
     initializeUniform([settings.latent_dim,...
     settings.num_labels]));
 paramsGen.EMb1 = dlarray(zeros(1,settings.num_labels,'single'));
-paramsGen.BNo1 = dlarray(zeros(numnodes,1,'single'));
-paramsGen.BNs1 = dlarray(ones(numnodes,1,'single'));
-paramsGen.FCW2 = dlarray(initializeGaussian(numnodes*[2,1]));
-paramsGen.FCb2 = dlarray(zeros(2*numnodes,1,'single'));
-paramsGen.BNo2 = dlarray(zeros(2*numnodes,1,'single'));
-paramsGen.BNs2 = dlarray(ones(2*numnodes,1,'single'));
-paramsGen.FCW3 = dlarray(initializeGaussian(numnodes*[4,2]));
-paramsGen.FCb3 = dlarray(zeros(4*numnodes,1,'single'));
-paramsGen.BNo3 = dlarray(zeros(4*numnodes,1,'single'));
-paramsGen.BNs3 = dlarray(ones(4*numnodes,1,'single'));
+paramsGen.BNo1 = dlarray(zeros(256,1,'single'));
+paramsGen.BNs1 = dlarray(ones(256,1,'single'));
+paramsGen.FCW2 = dlarray(initializeGaussian([512,256]));
+paramsGen.FCb2 = dlarray(zeros(512,1,'single'));
+paramsGen.BNo2 = dlarray(zeros(512,1,'single'));
+paramsGen.BNs2 = dlarray(ones(512,1,'single'));
+paramsGen.FCW3 = dlarray(initializeGaussian([1024,512]));
+paramsGen.FCb3 = dlarray(zeros(1024,1,'single'));
+paramsGen.BNo3 = dlarray(zeros(1024,1,'single'));
+paramsGen.BNs3 = dlarray(ones(1024,1,'single'));
 paramsGen.FCW4 = dlarray(initializeGaussian(...
-    [prod(settings.image_size),4*numnodes]));
+    [prod(settings.image_size),1024]));
 paramsGen.FCb4 = dlarray(zeros(prod(settings.image_size)...
     ,1,'single'));
 
 stGen.BN1 = []; stGen.BN2 = []; stGen.BN3 = [];
 
 %% Discriminator
-paramsDis.FCW1 = dlarray(initializeGaussian([4*numnodes,...
+paramsDis.FCW1 = dlarray(initializeGaussian([512,...
      prod(settings.image_size)],.02));
-paramsDis.FCb1 = dlarray(zeros(4*numnodes,1,'single'));
+paramsDis.FCb1 = dlarray(zeros(512,1,'single'));
 paramsDis.EMW1 = dlarray(...
     initializeUniform([prod(settings.image_size),...
     settings.num_labels]));
 paramsDis.EMb1 = dlarray(zeros(1,settings.num_labels,'single'));
-paramsDis.BNo1 = dlarray(zeros(4*numnodes,1,'single'));
-paramsDis.BNs1 = dlarray(ones(4*numnodes,1,'single'));
-paramsDis.FCW2 = dlarray(initializeGaussian(numnodes*[2,4]));
-paramsDis.FCb2 = dlarray(zeros(2*numnodes,1,'single'));
-paramsDis.BNo2 = dlarray(zeros(2*numnodes,1,'single'));
-paramsDis.BNs2 = dlarray(ones(2*numnodes,1,'single'));
-paramsDis.FCW3 = dlarray(initializeGaussian(numnodes*[1,2]));
-paramsDis.FCb3 = dlarray(zeros(numnodes,1,'single'));
-paramsDis.FCW4 = dlarray(initializeGaussian([1,numnodes]));
+paramsDis.BNo1 = dlarray(zeros(512,1,'single'));
+paramsDis.BNs1 = dlarray(ones(512,1,'single'));
+paramsDis.FCW2 = dlarray(initializeGaussian([512,512]));
+paramsDis.FCb2 = dlarray(zeros(512,1,'single'));
+paramsDis.BNo2 = dlarray(zeros(512,1,'single'));
+paramsDis.BNs2 = dlarray(ones(512,1,'single'));
+paramsDis.FCW3 = dlarray(initializeGaussian([512,512]));
+paramsDis.FCb3 = dlarray(zeros(512,1,'single'));
+paramsDis.FCW4 = dlarray(initializeGaussian([1,512]));
 paramsDis.FCb4 = dlarray(zeros(1,1,'single'));
 
 stDis.BN1 = []; stDis.BN2 = [];
@@ -154,7 +154,6 @@ end
 %% Generator
 function [dly,st] = Generator(dlx,labels,params,st)
 dly = embedding(dlx,labels,params);
-% dly = leakyrelu(dly,0.2);
 % fully connected
 %1
 dly = fullyconnect(dly,params.FCW1,params.FCb1);
@@ -197,7 +196,6 @@ end
 %% Discriminator
 function [dly,st] = Discriminator(dlx,labels,params,st)
 dly = embedding(dlx,labels,params);
-% dly = leakyrelu(dly,0.2);
 % fully connected 
 %1
 dly = fullyconnect(dly,params.FCW1,params.FCb1);
@@ -205,11 +203,11 @@ dly = leakyrelu(dly,0.2);
 %2
 dly = fullyconnect(dly,params.FCW2,params.FCb2);
 dly = leakyrelu(dly,0.2);
-dly = dropout(dly,.3);
+dly = dropout(dly,.4);
 %3
 dly = fullyconnect(dly,params.FCW3,params.FCb3);
 dly = leakyrelu(dly,0.2);
-dly = dropout(dly,.3);
+dly = dropout(dly,.4);
 %4
 dly = fullyconnect(dly,params.FCW4,params.FCb4);
 % sigmoid
@@ -230,8 +228,7 @@ d_out_fake0 = Discriminator(fake_images0,y0,paramsDis,stDis);
 % d_loss = -mean(log(d_output_real+eps)+log(1-d_output_fake+eps));
 % % g_loss = -mean(log(d_output_fake+eps))-mean(log(d_out_fake0+eps));
 % g_loss = -mean(log(d_out_fake0+eps));
-d_loss = .5*sum((d_output_real-1).^2)+.5*sum((d_output_fake).^2);%+.5*sum((d_out_fake0).^2);
-g_loss = sum((d_out_fake0-1).^2);%+sum((d_output_fake-1).^2);
+d_loss = -mean((d_output_real-1).^2)
 
 % For each network, calculate the gradients with respect to the loss.
 GradGen = dlgradient(g_loss,paramsGen,'RetainData',true);
