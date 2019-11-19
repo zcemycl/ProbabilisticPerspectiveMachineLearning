@@ -10,7 +10,7 @@ testY = mnist.test_labels;
 settings.latent_dim = 100;
 settings.num_labels = 10;
 settings.batch_size = 32; settings.image_size = [28,28,1]; 
-settings.lrD = 0.0002; settings.lrG = 0.001; settings.beta1 = 0.5;
+settings.lrD = 0.0002; settings.lrG = 0.0002; settings.beta1 = 0.5;
 settings.beta2 = 0.999; settings.maxepochs = 50;
 numnodes = 256;
 %% Initialization
@@ -98,19 +98,19 @@ while ~out
         
         if i==1 || rem(i,20)==0
             progressplot(paramsGen,stGen,settings);
-%             if i==1 || (epoch>=0 && i==1) 
-%                 h = gcf;
-%                 % Capture the plot as an image 
-%                 frame = getframe(h); 
-%                 im = frame2im(frame); 
-%                 [imind,cm] = rgb2ind(im,256); 
-%                 % Write to the GIF File 
-%                 if epoch == 0
-%                   imwrite(imind,cm,'GANmnist.gif','gif', 'Loopcount',inf); 
-%                 else 
-%                   imwrite(imind,cm,'GANmnist.gif','gif','WriteMode','append'); 
-%                 end 
-%             end
+            if i==1 || rem(i,200)==0
+                h = gcf;
+                % Capture the plot as an image 
+                frame = getframe(h); 
+                im = frame2im(frame); 
+                [imind,cm] = rgb2ind(im,256); 
+                % Write to the GIF File 
+                if epoch == 0
+                  imwrite(imind,cm,'CGANmnist.gif','gif', 'Loopcount',inf); 
+                else 
+                  imwrite(imind,cm,'CGANmnist.gif','gif','WriteMode','append'); 
+                end 
+            end
         end
         
     end
@@ -125,8 +125,7 @@ end
 %% Helper Functions
 %% preprocess
 function x = preprocess(x)
-% x = (x-127.5)/127.5;
-x = x/255;
+x = double(x)/255;
 x = (x-.5)/.5;
 x = reshape(x,28*28,[]);
 end
@@ -227,11 +226,11 @@ fake_images0 = Generator(z,y0,paramsGen,stGen);
 d_out_fake0 = Discriminator(fake_images0,y0,paramsDis,stDis);
 
 % Loss due to true or not
-% d_loss = -mean(log(d_output_real+eps)+log(1-d_output_fake+eps));
-% % g_loss = -mean(log(d_output_fake+eps))-mean(log(d_out_fake0+eps));
-% g_loss = -mean(log(d_out_fake0+eps));
-d_loss = .5*sum((d_output_real-1).^2)+.5*sum((d_output_fake).^2);%+.5*sum((d_out_fake0).^2);
-g_loss = sum((d_out_fake0-1).^2);%+sum((d_output_fake-1).^2);
+d_loss = -mean(log(d_output_real+eps)+log(1-d_output_fake+eps));
+% g_loss = -mean(log(d_output_fake+eps))-mean(log(d_out_fake0+eps));
+g_loss = -mean(log(d_out_fake0+eps));
+% d_loss = .5*sum((d_output_real-1).^2)+.5*sum((d_output_fake).^2);%+.5*sum((d_out_fake0).^2);
+% g_loss = sum((d_out_fake0-1).^2);%+sum((d_output_fake-1).^2);
 
 % For each network, calculate the gradients with respect to the loss.
 GradGen = dlgradient(g_loss,paramsGen,'RetainData',true);
