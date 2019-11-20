@@ -109,7 +109,8 @@ end
 %% Helper Functions
 %% preprocess
 function x = preprocess(x)
-x = x/255;
+x = double(x)/255;
+x = (x-.5)/.5;
 x = reshape(x,28,28,1,[]);
 end
 %% extract data
