@@ -227,10 +227,7 @@ d_out_fake0 = Discriminator(fake_images0,y0,paramsDis,stDis);
 
 % Loss due to true or not
 d_loss = -mean(log(d_output_real+eps)+log(1-d_output_fake+eps));
-% g_loss = -mean(log(d_output_fake+eps))-mean(log(d_out_fake0+eps));
 g_loss = -mean(log(d_out_fake0+eps));
-% d_loss = .5*sum((d_output_real-1).^2)+.5*sum((d_output_fake).^2);%+.5*sum((d_out_fake0).^2);
-% g_loss = sum((d_out_fake0-1).^2);%+sum((d_output_fake-1).^2);
 
 % For each network, calculate the gradients with respect to the loss.
 GradGen = dlgradient(g_loss,paramsGen,'RetainData',true);
