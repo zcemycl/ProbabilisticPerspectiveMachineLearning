@@ -1,5 +1,5 @@
 clear all; close all; clc;
-%% Basic Generative Adversarial Network
+%% InfoGAN
 %% Load Data
 load('mnistAll.mat')
 trainX = preprocess(mnist.train_images); 
