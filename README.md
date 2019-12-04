@@ -14,6 +14,8 @@ Other works relevant to Deep Learning include, [Local Interpretable Model-Agnost
 
 Other works relevant to Robotics and Computer Vision include, [Kinematic Control](https://github.com/zcemycl/ProbabilisticPerspectiveMachineLearning/blob/master/Robotics/Kinematics/RoboticArm.m), [A* algorithm](https://github.com/zcemycl/ProbabilisticPerspectiveMachineLearning/blob/master/Robotics/Astar/AstarAlgorithm.ipynb), [Dijkstra Algorithm](https://github.com/zcemycl/ProbabilisticPerspectiveMachineLearning/blob/master/Robotics/DijkstraGrid/DijkstraAlgorithm.ipynb), PD Control, Particle Filter, Kalman Filter, etc.
 
+Reinforcement Learning: [Value Iteration](https://github.com/zcemycl/ProbabilisticPerspectiveMachineLearning/blob/master/ReinforcemnetLearning/ValueIteration.ipynb), Policy Iteration, sarsa, q-learning
+
  ## References
  - Murphy, Kevin P. 2012, Machine Learning: A Probabilistic Perspective, The MIT Press 0262018020, 9780262018029. 
  - Ribeiro, Marco Tulio et al. “"Why Should I Trust You?": Explaining the Predictions of Any Classifier.” HLT-NAACL Demos (2016).
@@ -32,6 +34,6 @@ naive Bayes classifier| Robotic Arm (Kinematics) | Walking Robot (Kinematics) | 
 <img src="https://github.com/zcemycl/ProbabilisticPerspectiveMachineLearning/blob/master/Machine%20Learning%20A%20Probabilistic%20Perspective/3GMDD/F3.8/NB1.png" width="200">| <img src="https://github.com/zcemycl/ProbabilisticPerspectiveMachineLearning/blob/master/Robotics/Kinematics/RoboticArm.gif" width="200"> | <img src="https://github.com/zcemycl/ProbabilisticPerspectiveMachineLearning/blob/master/Robotics/Kinematics/WalkingRobot.gif" width="200"> | <img src="https://github.com/zcemycl/ProbabilisticPerspectiveMachineLearning/blob/master/Robotics/DijkstraGrid/Dijkstra.gif" width="200">
 A* algorithm |InfoGAN | CGAN | LSGAN
 <img src="https://github.com/zcemycl/ProbabilisticPerspectiveMachineLearning/blob/master/Robotics/Astar/AStar.gif" width="200"> | <img src="https://github.com/zcemycl/ProbabilisticPerspectiveMachineLearning/blob/master/Generative%20Adversarial%20Network%20and%20its%20extension/InfoGAN/InfoGANmnist.gif" width="200"> | <img src="https://github.com/zcemycl/ProbabilisticPerspectiveMachineLearning/blob/master/Generative%20Adversarial%20Network%20and%20its%20extension/CGAN/CGANmnist.gif" width="200">| <img src="https://github.com/zcemycl/ProbabilisticPerspectiveMachineLearning/blob/master/Generative%20Adversarial%20Network%20and%20its%20extension/LSGAN/LSGANresult.jpg" width="200">
-ACGAN|Beta-VAE|Neural Statistician|
-<img src="https://github.com/zcemycl/ProbabilisticPerspectiveMachineLearning/blob/master/Generative%20Adversarial%20Network%20and%20its%20extension/ACGAN/ACGANresult.jpg" width="200">|||
+ACGAN|Value Iteration|Beta-VAE|Neural Statistician
+<img src="https://github.com/zcemycl/ProbabilisticPerspectiveMachineLearning/blob/master/Generative%20Adversarial%20Network%20and%20its%20extension/ACGAN/ACGANresult.jpg" width="200">|<img src="https://github.com/zcemycl/ProbabilisticPerspectiveMachineLearning/blob/master/ReinforcemnetLearning/ValIter1.png" width="200">||
 
