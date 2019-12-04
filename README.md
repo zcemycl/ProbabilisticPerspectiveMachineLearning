@@ -14,7 +14,7 @@ Other works relevant to Deep Learning include, [Local Interpretable Model-Agnost
 
 Other works relevant to Robotics and Computer Vision include, [Kinematic Control](https://github.com/zcemycl/ProbabilisticPerspectiveMachineLearning/blob/master/Robotics/Kinematics/RoboticArm.m), [A* algorithm](https://github.com/zcemycl/ProbabilisticPerspectiveMachineLearning/blob/master/Robotics/Astar/AstarAlgorithm.ipynb), [Dijkstra Algorithm](https://github.com/zcemycl/ProbabilisticPerspectiveMachineLearning/blob/master/Robotics/DijkstraGrid/DijkstraAlgorithm.ipynb), PD Control, Particle Filter, Kalman Filter, etc.
 
-Reinforcement Learning: [Value Iteration](https://github.com/zcemycl/ProbabilisticPerspectiveMachineLearning/blob/master/ReinforcemnetLearning/ValueIteration.ipynb), [Policy Iteration](https://github.com/zcemycl/ProbabilisticPerspectiveMachineLearning/blob/master/ReinforcemnetLearning/PolicyIteration.ipynb), sarsa, q-learning
+Reinforcement Learning: [Value Iteration](https://github.com/zcemycl/ProbabilisticPerspectiveMachineLearning/blob/master/ReinforcemnetLearning/ValueIteration.ipynb), [Policy Iteration](https://github.com/zcemycl/ProbabilisticPerspectiveMachineLearning/blob/master/ReinforcemnetLearning/PolicyIteration.ipynb), [sarsa](https://github.com/zcemycl/ProbabilisticPerspectiveMachineLearning/blob/master/ReinforcemnetLearning/sarsa.ipynb), [q-learning](https://github.com/zcemycl/ProbabilisticPerspectiveMachineLearning/blob/master/ReinforcemnetLearning/q-learning.ipynb)
 
  ## References
  - Murphy, Kevin P. 2012, Machine Learning: A Probabilistic Perspective, The MIT Press 0262018020, 9780262018029. 
