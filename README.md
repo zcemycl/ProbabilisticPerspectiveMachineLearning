@@ -38,7 +38,7 @@ ACGAN|Value Iteration|Q-learning|sarsa
 <img src="https://github.com/zcemycl/ProbabilisticPerspectiveMachineLearning/blob/master/Generative%20Adversarial%20Network%20and%20its%20extension/ACGAN/ACGANresult.jpg" width="200">|<img src="https://github.com/zcemycl/ProbabilisticPerspectiveMachineLearning/blob/master/ReinforcemnetLearning/ValIter1.png" width="200">|<img src="https://github.com/zcemycl/ProbabilisticPerspectiveMachineLearning/blob/master/ReinforcemnetLearning/qlearn3.png" width="200">|<img src="https://github.com/zcemycl/ProbabilisticPerspectiveMachineLearning/blob/master/ReinforcemnetLearning/sarsa3.png" width="200">
 Potential Field Path|2D Homography |KLT Optical Track|3D Homography
 <img src="https://github.com/zcemycl/ProbabilisticPerspectiveMachineLearning/blob/master/Robotics/PotentialFieldPlanPath/result.png" width="200">|<img src="https://github.com/zcemycl/ProbabilisticPerspectiveMachineLearning/blob/master/Computer%20Vision/Logo%20Projection/result.png" width="200">|<img src="https://github.com/zcemycl/ProbabilisticPerspectiveMachineLearning/blob/master/Computer%20Vision/Optical%20Track/result.png" width="200">|<img src="https://github.com/zcemycl/ProbabilisticPerspectiveMachineLearning/blob/master/Computer%20Vision/3D%20object%20projection/ar_result.png" width="200">
-Point Cloud|||
-<img src="https://github.com/zcemycl/ProbabilisticPerspectiveMachineLearning/blob/master/Computer%20Vision/Point%20Cloud/pointcloud.png" width="200">|||
+Point Cloud|Calibration||
+<img src="https://github.com/zcemycl/ProbabilisticPerspectiveMachineLearning/blob/master/Computer%20Vision/Point%20Cloud/pointcloud.png" width="200">|<img src="https://github.com/zcemycl/ProbabilisticPerspectiveMachineLearning/blob/master/Computer%20Vision/Calibration/calibrationChessBoard.png" width="200">||
 
 
