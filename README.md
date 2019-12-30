@@ -49,5 +49,5 @@ PolyFit with Inverse|PolyFit with LU/Cholesky Factor|Bayesian Inference for Poly
 PD Track|Estimated Kalman Filter|Mobile Inverted Pendulum|LQR MIP
 <img src="https://github.com/zcemycl/ProbabilisticPerspectiveMachineLearning/blob/master/Robotics/PDcontrol/PDTrackresult.png" width="200">|<img src="https://github.com/zcemycl/ProbabilisticPerspectiveMachineLearning/blob/master/Robotics/Estimated%20Kalman%20Filter/EKFresult.png" width="200">|<img src="https://github.com/zcemycl/ProbabilisticPerspectiveMachineLearning/blob/master/Robotics/MobileInvertedPendulum/MIPsimulation.png" width="200">|<img src="https://github.com/zcemycl/ProbabilisticPerspectiveMachineLearning/blob/master/Robotics/LQRMIP/LQRMIPresult.png" width="200">
 PID MIP|||
-<img src="https://github.com/zcemycl/ProbabilisticPerspectiveMachineLearning/blob/master/Robotics/PIDMIP/PIDMIPresult.png" width="200">
+<img src="https://github.com/zcemycl/ProbabilisticPerspectiveMachineLearning/blob/master/Robotics/PIDMIP/PIDMIPresult.png" width="200">|||
 
